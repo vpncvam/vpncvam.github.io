@@ -259,20 +259,30 @@ html:not([data-theme-setting]) .vk-theme-btn .vk-ico-system {
   gap: 18px;
 }
 .vk-portrait {
+  /* --vk-photo-zoom < 1 zooms out: the photo (black background) is drawn smaller inside a black circle,
+     so more of it shows and the head gets some room at the top. The image file itself is never cropped. */
+  --vk-photo-zoom: 0.9;
   width: 240px;
   height: 240px;
   flex: none;
-}
-.vk-portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  position: relative;
+  overflow: hidden;
   border-radius: 50%;
-  display: block;
+  background: #000;
   border: 4px solid var(--vk-surface);
   box-shadow:
     0 0 0 2px var(--vk-accent),
     0 18px 40px -20px rgba(0, 0, 0, 0.45);
+}
+.vk-portrait img {
+  position: absolute;
+  left: 50%;
+  top: calc((1 - var(--vk-photo-zoom)) * 50%);
+  width: calc(100% * var(--vk-photo-zoom));
+  height: auto;
+  max-width: none;
+  transform: translateX(-50%);
+  display: block;
 }
 .vk-icon-links {
   display: flex;
