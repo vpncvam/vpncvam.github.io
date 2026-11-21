@@ -122,6 +122,20 @@ awards:
     detail: for Higher Education
     note: DST, Govt. of India, through the B.Sc. and M.Sc.
 
+# used only for search-engine structured data (schema.org Person) in _layouts/home.liquid
+seo:
+  job_title: Doctoral Researcher (Senior Research Fellow) in Cryptography
+  affiliation: Indian Institute of Technology Bhilai
+  affiliation_url: https://www.iitbhilai.ac.in
+  alumni_of: Motilal Nehru National Institute of Technology Allahabad
+  knows_about:
+    - Cryptography
+    - Lattice-based cryptography
+    - Post-quantum cryptography
+    - Fault-injection attacks
+    - ML-KEM
+    - Searchable symmetric encryption
+
 contact:
   email_display: vipink [at] iitbhilai.ac.in
   # the Copy button joins these two at click time, so the plain address never appears in the HTML

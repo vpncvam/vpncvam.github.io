@@ -19,6 +19,38 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     >
     <link rel="stylesheet" href="{{ '/assets/css/home.css' | relative_url | bust_file_cache }}">
+    {%- comment -%}
+      Person structured data (schema.org) so search engines can tell this Vipin Kumar apart from others
+      and link the site to the Scholar/GitHub/LinkedIn profiles. Values are passed through jsonify.
+    {%- endcomment -%}
+    {%- capture vk_full_name -%}{{ site.first_name }} {{ site.last_name }}{%- endcapture -%}
+    {%- assign vk_same_as = '' | split: ',' -%}
+    {%- if socials.scholar_userid -%}
+      {%- capture l -%}https://scholar.google.com/citations?user={{ socials.scholar_userid }}{%- endcapture -%}
+      {%- assign vk_same_as = vk_same_as | push: l -%}
+    {%- endif -%}
+    {%- if socials.github_username -%}
+      {%- capture l -%}https://github.com/{{ socials.github_username }}{%- endcapture -%}
+      {%- assign vk_same_as = vk_same_as | push: l -%}
+    {%- endif -%}
+    {%- if socials.linkedin_username -%}
+      {%- capture l -%}https://www.linkedin.com/in/{{ socials.linkedin_username }}{%- endcapture -%}
+      {%- assign vk_same_as = vk_same_as | push: l -%}
+    {%- endif -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": {{ vk_full_name | jsonify }},
+        "url": {{ site.url | append: site.baseurl | append: '/' | jsonify }},
+        "image": {{ page.profile.image | prepend: '/assets/img/' | absolute_url | jsonify }},
+        "jobTitle": {{ home.seo.job_title | jsonify }},
+        "affiliation": { "@type": "CollegeOrUniversity", "name": {{ home.seo.affiliation | jsonify }}, "url": {{ home.seo.affiliation_url | jsonify }} },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": {{ home.seo.alumni_of | jsonify }} },
+        "knowsAbout": {{ home.seo.knows_about | jsonify }},
+        "sameAs": {{ vk_same_as | jsonify }}
+      }
+    </script>
   </head>
 
   <body class="vk-home">

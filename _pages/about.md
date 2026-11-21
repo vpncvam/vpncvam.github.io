@@ -1,6 +1,5 @@
 ---
 layout: home
-title: Cryptography Researcher
 permalink: /
 subtitle: <strong>Doctoral Researcher (SRF)</strong>, Dept. of CSE, IIT Bhilai<br>de.ci.phe.red Lab · advised by <a href="https://dhimans.in" target="_blank" rel="noopener">Dr. Dhiman Saha</a>
 

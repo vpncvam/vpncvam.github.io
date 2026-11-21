@@ -2,14 +2,13 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Vipin Kumar # the website title (if blank, full name will be used instead)
+title: "Vipin Kumar – Cryptography Researcher, IIT Bhilai" # the website title (if blank, full name will be used instead)
 first_name: Vipin
 middle_name:
 last_name: Kumar
 contact_note: >
   Email is the best way to reach me.
-description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Vipin Kumar, doctoral researcher in cryptography at IIT Bhilai. Lattice-based and post-quantum cryptography, fault attacks on ML-KEM, searchable encryption and 5G security.
+description: "Vipin Kumar is a doctoral researcher in cryptography at IIT Bhilai, working on fault-injection attacks on lattice-based (post-quantum) cryptography such as ML-KEM, and on searchable symmetric encryption." # one line: a line break here breaks the schema.org JSON
 footer_text: # optional text shown at the right of the footer (template credit is kept in README.md and LICENSE)
 keywords: Vipin Kumar, cryptography, lattice-based cryptography, post-quantum cryptography, ML-KEM, Kyber, fault attacks, searchable encryption, 5G security, IIT Bhilai
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
@@ -297,6 +296,10 @@ plugins:
 
 # Sitemap settings
 defaults:
+  - scope:
+      path: "google*.html" # Search Console verification file, not a page
+    values:
+      sitemap: false
   - scope:
       path: "assets"
     values:
