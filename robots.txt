@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://vpncvam.github.io/sitemap.xml
