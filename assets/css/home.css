@@ -82,7 +82,7 @@ body.vk-home {
 }
 .vk-basis {
   position: fixed;
-  right: max(16px, env(safe-area-inset-right, 0px));
+  right: max(84px, calc(env(safe-area-inset-right, 0px) + 84px));
   bottom: 24px;
   z-index: 0;
   width: 150px;
@@ -822,4 +822,37 @@ pre.vk-bib.open {
   text-transform: uppercase;
   color: var(--vk-accent);
   margin: 0 0 8px !important;
+}
+
+/* al_folio_core's back-to-top button (vanilla-back-to-top), restyled to the teal design.
+   .vk-home raises specificity above the gem's #back-to-top rule. */
+.vk-home #back-to-top {
+  background: var(--vk-accent);
+  color: var(--vk-surface);
+  width: 44px;
+  height: 44px;
+  right: max(24px, calc(env(safe-area-inset-right, 0px) + 16px));
+  bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--vk-accent) 22%, transparent),
+    0 10px 24px -10px color-mix(in srgb, var(--vk-accent) 80%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+.vk-home #back-to-top:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--vk-accent) 30%, transparent),
+    0 14px 28px -10px color-mix(in srgb, var(--vk-accent) 90%, transparent);
+}
+.vk-home #back-to-top:focus-visible {
+  outline: 2px solid var(--vk-fg);
+  outline-offset: 3px;
+}
+.vk-home #back-to-top svg {
+  fill: currentColor;
+  stroke: currentColor;
 }
