@@ -1,0 +1,328 @@
+<!doctype html>
+{%- comment -%}
+  Single-page homepage (lattice design). A new layout, not an override of al_folio_core:
+  it reuses the gem's head.liquid (metadata, Open Graph, favicon, theme.js) and scripts.liquid,
+  and draws its own nav, hero and sections. Content comes from:
+    - this page's Markdown body (About text) and front matter
+    - _data/home.yml (tagline, interests, projects, teaching, events, awards, contact)
+    - _bibliography/papers.bib and patents.bib (via _layouts/home_bib.liquid)
+{%- endcomment -%}
+{%- assign home = site.data.home -%}
+{%- assign socials = site.data.socials -%}
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    >
+    <link rel="stylesheet" href="{{ '/assets/css/home.css' | relative_url | bust_file_cache }}">
+  </head>
+
+  <body class="vk-home">
+    <div class="vk-lattice-bg" aria-hidden="true"></div>
+    <svg class="vk-basis" viewBox="0 0 150 120" aria-hidden="true">
+      <defs>
+        <marker id="vk-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 0L10 5L0 10z" fill="currentColor" />
+        </marker>
+      </defs>
+      <path d="M20 100 L104 100 L132 30 L48 30 Z" fill="currentColor" fill-opacity=".08" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="3 3" />
+      <path d="M20 100 L102 100" stroke="currentColor" stroke-width="1.8" marker-end="url(#vk-arr)" fill="none" />
+      <path d="M20 100 L47 32" stroke="currentColor" stroke-width="1.8" marker-end="url(#vk-arr)" fill="none" />
+      <circle cx="20" cy="100" r="3" fill="currentColor" />
+      <text x="62" y="116">b₁</text><text x="16" y="62">b₂</text>
+      <text x="70" y="70" font-size="10">𝓛(B)</text>
+    </svg>
+
+    <nav class="vk-nav" aria-label="Main">
+      <div class="vk-nav-inner">
+        <a class="vk-brand" href="#about">
+          {{- site.first_name }}
+          <span>{{ site.last_name }}</span></a
+        >
+        <div class="vk-nav-links">
+          <a href="#about">About</a>
+          <a href="#publications">Publications</a>
+          <a href="#patents">Patents</a>
+          <a href="#projects">Projects</a>
+          <a href="#teaching">Teaching</a>
+          <a href="#awards">Awards</a>
+        </div>
+        <button id="light-toggle" class="vk-theme-btn" type="button" title="Change theme" aria-label="Change color theme (system, light, dark)">
+          <svg class="vk-ico-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" />
+          </svg>
+          <svg class="vk-ico-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="vk-ico-dark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+          </svg>
+          Theme
+        </button>
+      </div>
+    </nav>
+
+    <div class="vk-wrap">
+      <div class="vk-container">
+        <section class="vk-hero vk-section" id="about" aria-label="Introduction">
+          <canvas id="vk-lattice" aria-hidden="true"></canvas>
+          <div class="vk-hero-inner">
+            <div class="vk-side">
+              <div class="vk-portrait">
+                <img
+                  src="{{ page.profile.image | prepend: '/assets/img/' | relative_url | bust_file_cache }}"
+                  alt="Portrait of {{ site.first_name }} {{ site.last_name }}"
+                  width="240"
+                  height="240"
+                  loading="eager"
+                >
+              </div>
+              <div class="vk-icon-links">
+                {%- if socials.scholar_userid -%}
+                  <a
+                    class="vk-icon-btn"
+                    href="https://scholar.google.com/citations?user={{ socials.scholar_userid }}&amp;hl=en"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Google Scholar"
+                    data-tip="Google Scholar"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 3 1 9l11 6 9-4.9V17h2V9z" /><circle cx="12" cy="17" r="4" />
+                    </svg>
+                  </a>
+                {%- endif -%}
+                {%- if socials.github_username -%}
+                  <a
+                    class="vk-icon-btn"
+                    href="https://github.com/{{ socials.github_username }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="GitHub"
+                    data-tip="GitHub"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z" />
+                    </svg>
+                  </a>
+                {%- endif -%}
+                {%- if socials.linkedin_username -%}
+                  <a
+                    class="vk-icon-btn"
+                    href="https://www.linkedin.com/in/{{ socials.linkedin_username }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="LinkedIn"
+                    data-tip="LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M4 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM2 9h4v12H2zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6.1V21h-4v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z" />
+                    </svg>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+            <div>
+              <h1>
+                {{ site.first_name }}
+                {{ site.last_name }}
+              </h1>
+              <p class="vk-role">{{ page.subtitle }}</p>
+              <p class="vk-tagline">
+                <span id="vk-typed" data-phrases="{{ home.tagline_phrases | jsonify | escape }}">{{ home.tagline_phrases | first }}</span
+                ><span class="vk-caret" aria-hidden="true"></span>
+              </p>
+              <ul class="vk-chips" aria-label="Research interests">
+                {%- for interest in home.interests -%}
+                  <li class="vk-chip">{{ interest }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+          <div class="vk-hero-hint">move the cursor: Babai rounding to the nearest lattice point</div>
+        </section>
+
+        <main class="vk-main">
+          <div class="vk-col">
+            <section class="vk-section" aria-labelledby="vk-h-bio">
+              <h2 id="vk-h-bio">About</h2>
+              <div class="vk-prose">{{ content }}</div>
+            </section>
+
+            <section class="vk-section vk-pubs" id="publications" aria-labelledby="vk-h-pubs">
+              <h2 id="vk-h-pubs">Publications</h2>
+              {% bibliography --file papers --template home_bib --group_by none %}
+            </section>
+
+            <section class="vk-section vk-pubs" id="patents" aria-labelledby="vk-h-patents">
+              <h2 id="vk-h-patents">Patents</h2>
+              {% bibliography --file patents --template home_bib --group_by none %}
+            </section>
+
+            <section class="vk-section" id="projects" aria-labelledby="vk-h-proj">
+              <h2 id="vk-h-proj">Research Projects</h2>
+              <div class="vk-cards">
+                {%- for p in home.projects -%}
+                  <article class="vk-card">
+                    <div class="vk-card-top">
+                      <span class="vk-picon" aria-hidden="true">
+                        {%- case p.icon -%}
+                          {%- when 'chip' -%}
+                            <svg viewBox="0 0 24 24">
+                              <rect x="6" y="6" width="12" height="12" rx="2" />
+                              <path d="M9 3v3M12 3v3M15 3v3M9 18v3M12 18v3M15 18v3M3 9h3M3 12h3M3 15h3M18 9h3M18 12h3M18 15h3" />
+                              <path class="solid" d="M13.4 7.6 9.4 12.6h2.6l-1.4 3.8 4-5h-2.6z" />
+                            </svg>
+                          {%- when 'database' -%}
+                            <svg viewBox="0 0 24 24">
+                              <ellipse cx="9" cy="5" rx="6" ry="2.2" />
+                              <path d="M3 5v12a6 2.2 0 0 0 12 0V5" />
+                              <path d="M7.4 10.6V9.4a1.6 1.6 0 0 1 3.2 0v1.2" />
+                              <rect x="6.4" y="10.6" width="5.2" height="4" rx=".8" />
+                              <circle class="occlude" cx="17" cy="16" r="3.6" />
+                              <path d="M19.6 18.6 22 21" />
+                            </svg>
+                          {%- when 'towers' -%}
+                            <svg viewBox="0 0 24 24">
+                              <circle cx="6.5" cy="6" r="1" />
+                              <path d="M4 3.4a3.8 3.8 0 0 0 0 5.2M9 3.4a3.8 3.8 0 0 1 0 5.2" />
+                              <path d="M6.5 7.5 3.8 21M6.5 7.5 9.2 21M4.8 16h3.4" />
+                              <path class="solid" d="M17 1.8 21.2 9h-8.4z" stroke="currentColor" stroke-width="1" />
+                              <path class="cutout" d="M17 4.4v2" stroke-width="1.4" />
+                              <circle class="cutout-dot" cx="17" cy="7.8" r=".6" />
+                              <path d="M17 10.2 14.4 21M17 10.2 19.6 21M15.3 16.4h3.4" stroke-dasharray="1.1 1.9" />
+                            </svg>
+                        {%- endcase -%}
+                      </span>
+                      <span class="vk-status {{ p.status }}">{{ p.status | capitalize }}</span>
+                    </div>
+                    <span class="vk-meta">{{ p.period }} · {{ p.funder }}</span>
+                    <h3>{{ p.title }}</h3>
+                    <p class="vk-role-line">{{ p.role }}</p>
+                    {%- if p.pi -%}
+                      <p class="vk-pi-line">{{ p.pi }}</p>
+                    {%- endif -%}
+                    <p>{{ p.description }}</p>
+                    {%- if p.tags -%}
+                      <ul class="vk-chips">
+                        {%- for t in p.tags -%}
+                          <li class="vk-chip">{{ t }}</li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </article>
+                {%- endfor -%}
+              </div>
+            </section>
+
+            <section class="vk-section" id="teaching" aria-labelledby="vk-h-teach">
+              <h2 id="vk-h-teach">Teaching</h2>
+              {%- for g in home.teaching -%}
+                <h3 class="vk-group">{{ g.institution }}</h3>
+                <ul class="vk-tline">
+                  {%- for c in g.courses -%}
+                    <li>
+                      <span class="k">{{ c.code }}</span
+                      ><span>
+                        {{- c.title }}
+                        <span class="sub">· {{ c.terms }}</span></span
+                      >
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endfor -%}
+            </section>
+
+            <section class="vk-section" id="events" aria-labelledby="vk-h-events">
+              <h2 id="vk-h-events">Events</h2>
+              {%- for g in home.events -%}
+                <h3 class="vk-group">{{ g.group }}</h3>
+                <ul class="vk-tline">
+                  {%- for e in g.items -%}
+                    <li>
+                      <span class="k">{{ e.date }}</span>
+                      <span>
+                        {%- if e.url -%}
+                          <a href="{{ e.url }}" target="_blank" rel="noopener">{{ e.name }}</a>
+                        {%- else -%}
+                          {{ e.name }}
+                        {%- endif %}
+                        <span class="sub">· {{ e.place }}</span></span
+                      >
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endfor -%}
+            </section>
+
+            <section class="vk-section" id="awards" aria-labelledby="vk-h-awards">
+              <h2 id="vk-h-awards">Awards &amp; Achievements</h2>
+              <ul class="vk-tline">
+                {%- for a in home.awards -%}
+                  <li>
+                    <span class="k">{{ a.year }}</span>
+                    <span>
+                      <strong>{{ a.name }}</strong>, {{ a.detail }}
+                      {%- if a.rank %}
+                        <span class="vk-rank">{{ a.rank }}</span>
+                      {%- endif -%}
+                      {%- if a.note %}
+                        <span class="sub">· {{ a.note }}</span>
+                      {%- endif -%}
+                    </span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </section>
+          </div>
+
+          <aside class="vk-aside" aria-label="Contact">
+            <div class="vk-panel vk-section">
+              <h2>Contact</h2>
+              <div class="vk-kv">
+                <div>
+                  <span class="lbl">Email</span>
+                  <div class="vk-copy-row">
+                    <span class="vk-mono" id="vk-email-text">{{ home.contact.email_display }}</span>
+                    <button
+                      class="vk-small-btn"
+                      type="button"
+                      id="vk-copy-email"
+                      data-u="{{ home.contact.email_user }}"
+                      data-d="{{ home.contact.email_domain }}"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </div>
+                <div><span class="lbl">Office</span>{{ home.contact.office }}</div>
+              </div>
+            </div>
+          </aside>
+        </main>
+
+        <footer class="vk-footer">
+          <p>
+            © {{ 'now' | date: '%Y' }}
+            {{ site.first_name }}
+            {{ site.last_name }}
+          </p>
+          {% if site.footer_text %}
+            <p>{{ site.footer_text }}</p>
+          {% endif %}
+        </footer>
+      </div>
+    </div>
+
+    {% include scripts.liquid %}
+    <script src="{{ '/assets/js/home.js' | relative_url | bust_file_cache }}" defer></script>
+    {% if site.goatcounter and jekyll.environment == 'production' %}
+      <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    {% endif %}
+  </body>
+</html>

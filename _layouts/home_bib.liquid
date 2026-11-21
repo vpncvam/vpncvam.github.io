@@ -1,0 +1,82 @@
+---
+---
+{%- comment -%}
+  One publication/patent entry for the homepage (used via `--template home_bib` in _layouts/home.liquid).
+  A new file, not an override of al_folio_core's bib.liquid.
+  Badges come from BibTeX fields: html (shown as "ePrint" when it points at eprint.iacr.org), pdf, doi, code, slides, bibtex_show.
+{%- endcomment -%}
+{%- assign is_patent = false -%}
+{%- if entry.abbr == 'Patent' -%}{%- assign is_patent = true -%}{%- endif -%}
+<div class="vk-pub">
+  <div class="vk-venue{% if is_patent %} vk-patent{% endif %}">
+    {{- entry.abbr | default: entry.type | upcase -}}
+    <br>
+    {{- entry.year -}}
+  </div>
+  <div>
+    <p class="vk-pub-title">{{ entry.title }}</p>
+    <p class="vk-pub-authors">
+      {%- for author in entry.author_array -%}
+        {%- assign author_is_self = false -%}
+        {%- if site.scholar.last_name contains author.last and site.scholar.first_name contains author.first -%}
+          {%- assign author_is_self = true -%}
+        {%- endif -%}
+        {%- unless forloop.first -%}, {% endunless -%}
+        {%- if author_is_self -%}
+          <b>
+            {{- author.first }}
+            {{ author.last -}}
+          </b>
+        {%- else -%}
+          {{ author.first }}
+          {{ author.last }}
+        {%- endif -%}
+      {%- endfor -%}
+    </p>
+    <p class="vk-pub-meta">
+      {%- if entry.booktitle -%}
+        {{ entry.booktitle }}
+        {%- if entry.address %}, {{ entry.address }}{% endif -%}
+        , {{ entry.year }}
+        {%- if entry.pages %}, pp. {{ entry.pages | replace: '--', '–' }}{% endif -%}
+      {%- elsif entry.journal -%}
+        {{ entry.journal }}, {{ entry.year }}
+      {%- elsif entry.howpublished -%}
+        {{ entry.howpublished }}
+      {%- endif -%}
+      {%- if entry.note %} · {{ entry.note }}{% endif -%}
+    </p>
+    {%- if entry.html or entry.pdf or entry.doi or entry.code or entry.slides or entry.bibtex_show -%}
+      <div class="vk-badges">
+        {%- if entry.html -%}
+          <a class="vk-badge" href="{{ entry.html }}" target="_blank" rel="noopener">
+            {%- if entry.html contains 'eprint.iacr.org' -%}ePrint{%- else -%}HTML{%- endif -%}
+          </a>
+        {%- endif -%}
+        {%- if entry.pdf -%}
+          {%- if entry.pdf contains '://' -%}
+            <a class="vk-badge" href="{{ entry.pdf }}" target="_blank" rel="noopener">PDF</a>
+          {%- else -%}
+            <a class="vk-badge" href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" target="_blank" rel="noopener">PDF</a>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if entry.doi -%}
+          <a class="vk-badge" href="https://doi.org/{{ entry.doi }}" target="_blank" rel="noopener">DOI</a>
+        {%- endif -%}
+        {%- if entry.code -%}
+          <a class="vk-badge" href="{{ entry.code }}" target="_blank" rel="noopener">Code</a>
+        {%- endif -%}
+        {%- if entry.slides -%}
+          <a class="vk-badge" href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" target="_blank" rel="noopener">Slides</a>
+        {%- endif -%}
+        {%- if entry.bibtex_show -%}
+          {%- assign bib_id = entry.key | slugify | prepend: 'vk-bib-' -%}
+          <button class="vk-badge" type="button" data-vk-bib="{{ bib_id }}" aria-expanded="false" aria-controls="{{ bib_id }}">BibTeX</button>
+        {%- endif -%}
+      </div>
+      {%- if entry.bibtex_show -%}
+        <pre class="vk-bib" id="{{ bib_id }}">{{ entry.bibtex | hideCustomBibtex | escape }}</pre>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>

@@ -1,0 +1,5 @@
+# Social links rendered by jekyll-socials (used in search and the footer).
+# The homepage hero builds its icon row (under the photo) from these values in _layouts/home.liquid.
+scholar_userid: GHsX49gAAAAJ # your Google Scholar ID
+github_username: vpncvam # your GitHub user name
+linkedin_username: vpncvam # your LinkedIn user name

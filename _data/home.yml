@@ -1,0 +1,130 @@
+# Content for the single-page homepage (rendered by _layouts/about.liquid).
+# Edit the entries below; no HTML needed. Order is the order shown on the page.
+
+tagline_phrases:
+  - Lattice-based cryptography
+  - Post-quantum security
+  - Searchable encryption
+  - Fault attacks on PQC hardware
+
+interests:
+  - Lattice-based cryptography
+  - Post-quantum
+  - Searchable encryption
+  - 5G security
+  - Fault attacks
+
+# icon: chip | database | towers   status: ongoing | completed
+projects:
+  - title: PIPETA
+    icon: chip
+    status: ongoing
+    period: 2025 – present
+    funder: DST, National Quantum Mission
+    role: Senior Research Fellow · IIT Bhilai
+    pi: "MPI: Dr. Dhiman Saha"
+    description: Post-quantum IP encryptor and TLS accelerator. Fault-injection analysis of the PQC hardware.
+    tags: [PQC, Fault attacks]
+  - title: Hide and Seek
+    icon: database
+    status: ongoing
+    period: 2023 – present
+    funder: IBITF, IIT Bhilai
+    role: Collaborator · Project Associate-I, 2023–25
+    pi: "PI: Dr. Dhiman Saha"
+    description: Lightweight searchable encryption schemes for financial databases that still allow search queries.
+    tags: [SSE, Databases]
+  - title: 5G False Base Stations
+    icon: towers
+    status: completed
+    period: "2023"
+    funder: MeitY, IIT Delhi
+    role: Project Scientist · IIT Delhi
+    pi: "PI: Prof. Brejesh Lall · Co-PI: Dr. Dhiman Saha"
+    description: Mitigating authentication relay attacks by false base stations in 5G and beyond.
+    tags: [5G, Standards]
+
+teaching:
+  - institution: Teaching Assistant · IIT Bhilai
+    courses:
+      - code: CSL 505
+        title: Cryptography
+        terms: Monsoon 2024, Monsoon 2026
+      - code: CS 612 / CSL 622
+        title: Quantum Computing for Computer Scientists
+        terms: Monsoon 2026
+      - code: CSL 622
+        title: Quantum Computing for Computer Scientists
+        terms: Spring 2024
+  - institution: Teaching Assistant · Shiv Nadar University
+    courses:
+      - code: CSD 451
+        title: Applied Cryptography
+        terms: Monsoon 2022
+      - code: MAT 647
+        title: Coding Theory and Cryptography
+        terms: Spring 2021
+      - code: CSD 421
+        title: Applied Cryptography
+        terms: Monsoon 2021
+      - code: MAT 104
+        title: Mathematical Methods
+        terms: Monsoon 2020
+      - code: MAT 101
+        title: Calculus I
+        terms: Monsoon 2019
+
+events:
+  - group: Organising Committee Member
+    items:
+      - date: Dec 2025
+        name: Crypto Winter School 2025
+        url: https://events.iitbhilai.ac.in/cws
+        place: de.ci.phe.red Lab, IIT Bhilai
+      - date: Dec 2025
+        name: National Workshop on Cryptology 2025
+        url: https://events.iitbhilai.ac.in/nwc/
+        place: IIT Bhilai
+      - date: Mar 2025
+        name: CRYPTOS 2025
+        place: IIT Bhilai
+  - group: Attended
+    items:
+      - date: Jan 2026
+        name: Cryptology Conclave
+        place: IIT Hyderabad
+      - date: Dec 2025
+        name: INDOCRYPT 2025
+        place: IIIT Bhubaneswar
+      - date: Oct 2022
+        name: National Workshop on Cryptography
+        place: C-DOT, New Delhi
+
+awards:
+  - year: "2019"
+    name: CSIR-NET
+    detail: Mathematical Sciences
+    rank: AIR 88
+  - year: "2019"
+    name: GATE
+    detail: Mathematics
+    rank: AIR 99
+  - year: "2018"
+    name: INSPIRE Fellowship
+    detail: for PhD
+    note: provisionally awarded by DST, Govt. of India
+  - year: "2016"
+    name: IIT-JAM
+    detail: Mathematics
+    rank: AIR 338
+  - year: 2013–18
+    name: INSPIRE Scholarship
+    detail: for Higher Education
+    note: DST, Govt. of India, through the B.Sc. and M.Sc.
+
+contact:
+  email_display: vipink [at] iitbhilai.ac.in
+  # the Copy button joins these two at click time, so the plain address never appears in the HTML
+  email_user: vipink
+  email_domain: iitbhilai.ac.in
+  office: ED1 107, de.ci.phe.red Lab, Dept. of CSE, IIT Bhilai, Chhattisgarh
