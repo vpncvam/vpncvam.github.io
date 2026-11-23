@@ -29,6 +29,10 @@
       {%- capture l -%}https://scholar.google.com/citations?user={{ socials.scholar_userid }}{%- endcapture -%}
       {%- assign vk_same_as = vk_same_as | push: l -%}
     {%- endif -%}
+    {%- if socials.orcid_id -%}
+      {%- capture l -%}https://orcid.org/{{ socials.orcid_id }}{%- endcapture -%}
+      {%- assign vk_same_as = vk_same_as | push: l -%}
+    {%- endif -%}
     {%- if socials.github_username -%}
       {%- capture l -%}https://github.com/{{ socials.github_username }}{%- endcapture -%}
       {%- assign vk_same_as = vk_same_as | push: l -%}
@@ -126,6 +130,21 @@
                   >
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M12 3 1 9l11 6 9-4.9V17h2V9z" /><circle cx="12" cy="17" r="4" />
+                    </svg>
+                  </a>
+                {%- endif -%}
+                {%- if socials.orcid_id -%}
+                  <a
+                    class="vk-icon-btn"
+                    href="https://orcid.org/{{ socials.orcid_id }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="ORCID"
+                    data-tip="ORCID"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" aria-hidden="true">
+                      <circle cx="7" cy="6.4" r="1.45" /><path d="M5.9 9h2.2v9H5.9z" />
+                      <path d="M10.4 9h3.7c3 0 5.1 1.9 5.1 4.5S17.1 18 14.1 18h-3.7zm2.2 2v5h1.4c1.7 0 2.9-1 2.9-2.5S15.7 11 14 11z" />
                     </svg>
                   </a>
                 {%- endif -%}
